@@ -1,6 +1,5 @@
-// import { Sprig } from "sprig";
-
-import { webEngine } from 'https://esm.sh/sprig@1/web'
+import { webEngine } from '../node_modules/sprig/dist/web/index.js';
+import {level, ignoreTabs} from './creatives.js'
 
 const runGame = (api) => {
 	const {
@@ -55,7 +54,7 @@ const runGame = (api) => {
 5555555555555555
 5555555555555555
 5555555555555555` ],
-		[ rope, bitmap`
+		[ 'r', bitmap`
 ................
 ................
 3333333333333333
@@ -64,15 +63,7 @@ const runGame = (api) => {
 ` ],
 	)
 
-	let level = 0
-	const levels = [
-		map
-		`..r
-        .p.
-        ...`]
-
-	setMap(levels[level])
-
+	setMap(level[0])
 
 	setBackground('b')
 
@@ -82,13 +73,13 @@ const runGame = (api) => {
 		"w": { dx: 0, dy: -1 }, // Move up
 		"d": { dx: 1, dy: 0 },  // Move right
 		"a": { dx: -1, dy: 0 }, // Move left
-	  }
+	}
 
 
-	  onInput("s", () => movePlayer("s"))
-	  onInput("w", () => movePlayer("w"))
-	  onInput("d", () => movePlayer("d"))
-	  onInput("a", () => movePlayer("a"))
+	onInput("s", () => movePlayer("s"))
+	onInput("w", () => movePlayer("w"))
+	onInput("d", () => movePlayer("d"))
+	onInput("a", () => movePlayer("a"))
 
 	  function movePlayer(key) {
 		const { dx, dy } = directionMap[key]
@@ -97,9 +88,9 @@ const runGame = (api) => {
 		playerSprite.y += dy
 	  }
 
-	  afterInput(() => {
+	afterInput(() => {
 
-	  })
+	})
 }
 
 const game = webEngine(document.getElementById('canvas'))

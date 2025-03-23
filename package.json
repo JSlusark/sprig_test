@@ -1,15 +1,5 @@
 {
-  "name": "sprig_game",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
-    "sprig": "github:YOUR_USERNAME/sprig"
+    "sprig": "^1.1.3"
   }
 }
