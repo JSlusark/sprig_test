@@ -1,5 +1,7 @@
 import { webEngine } from '../node_modules/sprig/dist/web/index.js';
-import {level, ignoreTabs} from './creatives.js'
+import {level, sprites} from './creatives.js'
+import { movePlayer, dodge} from './commands.js';
+
 
 const runGame = (api) => {
 	const {
@@ -13,80 +15,24 @@ const runGame = (api) => {
 		afterInput
 	} = api
 
-
-	const player = "p"
-	const rope = "r"
-
-	// chracter setting
 	setLegend(
-		[ 'p', bitmap`
-................
-................
-.......000......
-.......0.0......
-......0..0......
-......0...0.0...
-....0003.30.0...
-....0.0...000...
-....0.05550.....
-......0...0.....
-.....0....0.....
-.....0...0......
-......000.......
-......0.0.......
-.....00.00......
-................` ],
-// is b for background?
-		[ 'b', bitmap`
-5555555555555555
-5555555555555555
-5555555555555555
-5555555555555555
-5555555555555555
-5555555555555555
-5555555555555555
-5555555555555555
-5555555555555555
-5555555555555555
-5555555555555555
-5555555555555555
-5555555555555555
-5555555555555555
-5555555555555555
-5555555555555555` ],
-		[ 'r', bitmap`
-................
-................
-3333333333333333
-................
-................
-` ],
+		sprites.player,
+		sprites.kneeling,
+		sprites.rope,
+		sprites.bg,
 	)
+	setBackground('b')
 
 	setMap(level[0])
 
-	setBackground('b')
+
+	onInput("w", () => movePlayer("w", getFirst, sprites.player[0]))
+	onInput("a", () => movePlayer("a", getFirst, sprites.player[0]))
+    onInput("s", () => dodge("s", getFirst, sprites.player[0], sprites.kneeling[0]));
+	onInput("d", () => movePlayer("d", getFirst, sprites.player[0]))
+	onInput("l", () => jump("l", getFirst, sprites.player[0]));
 
 
-	const directionMap = {
-		"s": { dx: 0, dy: 1 },  // Move down
-		"w": { dx: 0, dy: -1 }, // Move up
-		"d": { dx: 1, dy: 0 },  // Move right
-		"a": { dx: -1, dy: 0 }, // Move left
-	}
-
-
-	onInput("s", () => movePlayer("s"))
-	onInput("w", () => movePlayer("w"))
-	onInput("d", () => movePlayer("d"))
-	onInput("a", () => movePlayer("a"))
-
-	  function movePlayer(key) {
-		const { dx, dy } = directionMap[key]
-		const playerSprite = getFirst(player)
-		playerSprite.x += dx
-		playerSprite.y += dy
-	  }
 
 	afterInput(() => {
 
